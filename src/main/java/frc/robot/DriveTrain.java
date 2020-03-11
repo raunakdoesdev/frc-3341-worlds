@@ -20,16 +20,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 class DriveTrainConstants {
     // PID Constants
-    public static double kP = 0.25;
-    public static double kI = 0.001;
-    public static double kD = 20;
-    public static double kF = 1023.0 / 7200.0;
+    public static final double kP = 0.25;
+    public static final double kI = 0.001;
+    public static final double kD = 20;
+    public static final double kF = 1023.0 / 7200.0;
 
     // Talon IDs
-    public static int leftMasterTalonID = 2;
-    public static int rightMasterTalonID = 3;
-    public static int leftSlaveTalonID = 4;
-    public static int rightSlaveTalonID = 5;
+    public static final int leftMasterTalonID = 2;
+    public static final int rightMasterTalonID = 3;
+    public static final int leftSlaveTalonID = 4;
+    public static final int rightSlaveTalonID = 5;
 
     // Button Mapping
     public static int invertDriveButton = 4;
@@ -38,8 +38,8 @@ class DriveTrainConstants {
 public class DriveTrain extends SubsystemBase {
     private WPI_TalonSRX leftMaster = new WPI_TalonSRX(DriveTrainConstants.leftMasterTalonID);
     private WPI_TalonSRX rightMaster = new WPI_TalonSRX(DriveTrainConstants.rightMasterTalonID);
-    private WPI_TalonSRX leftFollow = new WPI_TalonSRX(DriveTrainConstants.leftSlaveTalonID);
-    private WPI_TalonSRX rightFollow = new WPI_TalonSRX(DriveTrainConstants.rightSlaveTalonID);
+    private WPI_TalonSRX leftFollower = new WPI_TalonSRX(DriveTrainConstants.leftSlaveTalonID);
+    private WPI_TalonSRX rightFollower = new WPI_TalonSRX(DriveTrainConstants.rightSlaveTalonID);
 
     private SpeedControllerGroup leftMotors;
     private SpeedControllerGroup rightMotors;
@@ -201,5 +201,4 @@ public class DriveTrain extends SubsystemBase {
         if (instance == null)
             instance = new DriveTrain();
         return instance;
-    }
 }

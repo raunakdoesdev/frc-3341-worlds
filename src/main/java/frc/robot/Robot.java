@@ -17,9 +17,14 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 
 public class Robot extends TimedRobot {
+  // Subsystems
   private DriveTrain driveTrain;
-  private Joystick leftDriver;
-  private Joystick rightDriver;
+  private Lift lift;
+
+  // Joysticks
+  private Joystick leftDriverJoystick;
+  private Joystick rightDriverJoystick;
+  private Joystick mechJoystick;
 
   @Override
   public void robotInit() {
@@ -27,10 +32,14 @@ public class Robot extends TimedRobot {
     //we will not have to manually call the Periodic loop each run.
     //Instead, WPILib will handle it for us.
     CommandScheduler.getInstance().registerSubsystem(DriveTrain.getInstance());
+    lift = new Lift();
+
   }
 
   @Override
   public void teleopPeriodic() {
+
+    lift.periodic(mechJoystick);
 
   }
 }
