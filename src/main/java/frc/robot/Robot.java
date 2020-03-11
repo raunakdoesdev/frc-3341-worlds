@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 /**
  * This is a demo program showing the use of the RobotDrive class, specifically
@@ -22,11 +23,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    driveTrain = new DriveTrain();
+    //By using the Command Scheduler to register our subsystem,
+    //we will not have to manually call the Periodic loop each run.
+    //Instead, WPILib will handle it for us.
+    CommandScheduler.getInstance().registerSubsystem(DriveTrain.getInstance());
   }
 
   @Override
   public void teleopPeriodic() {
-    driveTrain.periodic(leftDriver, rightDriver);
+
   }
 }
