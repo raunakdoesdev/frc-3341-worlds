@@ -11,6 +11,7 @@ class LiftConstants {
     // Talon IDs
     public static final int leadScrewTalonID = 7;
     public static final int pivotTalonID = 6;
+    public static final int balanceTalonID = 5; // TODO: Identify from previous code (random value used here)
 
     // Button Mapping
     // TODO: Update to Operator Driver Preferences
@@ -18,26 +19,34 @@ class LiftConstants {
     public static final int leadScrewDownButton = 5;
     public static final int pivotUpButton = 6;
     public static final int pivotDownButton = 7;
+    public static final int balanceLeftButton = 8;
+    public static final int balanceRightButton = 9;
 
     // Rotation Speeds
+    // TODO: Update Speeds
     public static final double leadScrewSpeed = 0.5;
     public static final double pivotSpeed = 0.5;
+    public static final double balanceSpeed = 0.5;
 }
 
 public class Lift {
     private TalonSRX leadScrew = new TalonSRX(LiftConstants.leadScrewTalonID);
     private TalonSRX pivot = new TalonSRX(LiftConstants.pivotTalonID);
+    private TalonSRX balance = new TalonSRX(LiftConstants.pivotTalonID);
 
     public Lift() {
-        // Lead Screw Configuration
+        // Lead Screw Physical Configuration
         leadScrew.setInverted(true);
         leadScrew.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
         leadScrew.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
 
-        // Pivot Configuration
+        // Pivot Physical Configuration
         pivot.setInverted(true);
         pivot.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
         pivot.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyClosed);
+
+        // Balance Physical Configuration
+        balance.setInverted(false);
     }
 
     public void periodic(Joystick mechJoystick) {
@@ -52,5 +61,11 @@ public class Lift {
             pivot.set(ControlMode.PercentOutput, LiftConstants.pivotSpeed);
         else if (mechJoystick.getRawButtonPressed(LiftConstants.pivotDownButton))
             pivot.set(ControlMode.PercentOutput, -LiftConstants.pivotSpeed);
+
+        // Balance Control
+        if (mechJoystick.getRawButtonPressed(LiftConstants.balanceRightButton))
+            balance.set(ControlMode.PercentOutput, LiftConstants.pivotSpeed);
+        else if (mechJoystick.getRawButtonPressed(LiftConstants.balanceLeftButton))
+            balance.set(ControlMode.PercentOutput, -LiftConstants.pivotSpeed);
     }
 }
