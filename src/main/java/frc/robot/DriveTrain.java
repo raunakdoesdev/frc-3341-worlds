@@ -41,11 +41,11 @@ public class DriveTrain {
         differentialDrive = new DifferentialDrive(leftMaster, rightMaster);
     }
 
-    public void periodic(Joystick leftDriver, Joystick rightDriver){
-        if(leftDriver.getRawButtonReleased(DriveTrainConstants.invertDriveButton))
+    public void periodic(Joystick leftDriver, Joystick rightDriver) {
+        if (leftDriver.getRawButtonReleased(DriveTrainConstants.invertDriveButton))
             invertedDrive = !invertedDrive;
 
-        if(!invertedDrive)
+        if (!invertedDrive)
             differentialDrive.tankDrive(leftDriver.getY(), rightDriver.getY());
         else
             differentialDrive.tankDrive(-rightDriver.getY(), -rightDriver.getY());
