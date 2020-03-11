@@ -10,16 +10,16 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 class DriveTrainConstants {
     // PID Constants
-    public static double kP = 0.25;
-    public static double kI = 0.001;
-    public static double kD = 20;
-    public static double kF = 1023.0 / 7200.0;
+    public static final double kP = 0.25;
+    public static final double kI = 0.001;
+    public static final double kD = 20;
+    public static final double kF = 1023.0 / 7200.0;
 
     // Talon IDs
-    public static int leftMasterTalonID = 2;
-    public static int rightMasterTalonID = 3;
-    public static int leftSlaveTalonID = 4;
-    public static int rightSlaveTalonID = 5;
+    public static final int leftMasterTalonID = 2;
+    public static final int rightMasterTalonID = 3;
+    public static final int leftSlaveTalonID = 4;
+    public static final int rightSlaveTalonID = 5;
 
     // Button Mapping
     public static int invertDriveButton = 4;
@@ -28,31 +28,11 @@ class DriveTrainConstants {
 public class DriveTrain {
     private WPI_TalonSRX leftMaster = new WPI_TalonSRX(DriveTrainConstants.leftMasterTalonID);
     private WPI_TalonSRX rightMaster = new WPI_TalonSRX(DriveTrainConstants.rightMasterTalonID);
-    private WPI_TalonSRX leftFollow = new WPI_TalonSRX(DriveTrainConstants.leftSlaveTalonID);
-    private WPI_TalonSRX rightFollow = new WPI_TalonSRX(DriveTrainConstants.rightSlaveTalonID);
+    private WPI_TalonSRX leftFollower = new WPI_TalonSRX(DriveTrainConstants.leftSlaveTalonID);
+    private WPI_TalonSRX rightFollower = new WPI_TalonSRX(DriveTrainConstants.rightSlaveTalonID);
 
     private DifferentialDrive differentialDrive;
     private boolean invertedDrive = false;
-
-    public DriveTrain() {
-        WPI_TalonSRX motors[] = new WPI_TalonSRX[] { leftMaster, rightMaster, leftFollow, rightFollow };
-        for (WPI_TalonSRX motor : motors)
-            configureMotor(motor);
-        differentialDrive = new DifferentialDrive(leftMaster, rightMaster);
-    }
-
-    public void periodic(Joystick leftDriver, Joystick rightDriver) {
-        if (leftDriver.getRawButtonReleased(DriveTrainConstants.invertDriveButton))
-            invertedDrive = !invertedDrive;
-
-        if (!invertedDrive)
-            differentialDrive.tankDrive(leftDriver.getY(), rightDriver.getY());
-        else
-            differentialDrive.tankDrive(-rightDriver.getY(), -leftDriver.getY());
-
-        leftFollow.set(ControlMode.Follower, DriveTrainConstants.leftMasterTalonID);
-        rightFollow.set(ControlMode.Follower, DriveTrainConstants.rightMasterTalonID);
-    }
 
     public void configureMotor(WPI_TalonSRX driveMotor) {
         driveMotor.configFactoryDefault();
@@ -66,5 +46,25 @@ public class DriveTrain {
         driveMotor.config_kI(0, DriveTrainConstants.kI);
         driveMotor.config_kD(0, DriveTrainConstants.kD);
         driveMotor.config_kF(0, DriveTrainConstants.kF);
+    }
+
+    public DriveTrain() {
+        WPI_TalonSRX motors[] = new WPI_TalonSRX[] { leftMaster, rightMaster, leftFollower, rightFollower };
+        for (WPI_TalonSRX motor : motors)
+            configureMotor(motor);
+        differentialDrive = new DifferentialDrive(leftMaster, rightMaster);
+    }
+
+    public void periodic(Joystick leftDriverJoystick, Joystick rightDriverJoystick) {
+        if (leftDriverJoystick.getRawButtonReleased(DriveTrainConstants.invertDriveButton))
+            invertedDrive = !invertedDrive;
+
+        if (!invertedDrive)
+            differentialDrive.tankDrive(leftDriverJoystick.getY(), rightDriverJoystick.getY());
+        else
+            differentialDrive.tankDrive(-rightDriverJoystick.getY(), -leftDriverJoystick.getY());
+
+        leftFollower.set(ControlMode.Follower, DriveTrainConstants.leftMasterTalonID);
+        rightFollower.set(ControlMode.Follower, DriveTrainConstants.rightMasterTalonID);
     }
 }

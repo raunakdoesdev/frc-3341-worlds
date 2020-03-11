@@ -16,17 +16,24 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 
 public class Robot extends TimedRobot {
+  // Subsystems
   private DriveTrain driveTrain;
-  private Joystick leftDriver;
-  private Joystick rightDriver;
+  private Lift lift;
+
+  // Joysticks
+  private Joystick leftDriverJoystick;
+  private Joystick rightDriverJoystick;
+  private Joystick mechJoystick;
 
   @Override
   public void robotInit() {
     driveTrain = new DriveTrain();
+    lift = new Lift();
   }
 
   @Override
   public void teleopPeriodic() {
-    driveTrain.periodic(leftDriver, rightDriver);
+    driveTrain.periodic(leftDriverJoystick, rightDriverJoystick);
+    lift.periodic(mechJoystick);
   }
 }
