@@ -48,7 +48,7 @@ public class DriveTrain {
         if (!invertedDrive)
             differentialDrive.tankDrive(leftDriver.getY(), rightDriver.getY());
         else
-            differentialDrive.tankDrive(-rightDriver.getY(), -rightDriver.getY());
+            differentialDrive.tankDrive(-rightDriver.getY(), -leftDriver.getY());
 
         leftFollow.set(ControlMode.Follower, DriveTrainConstants.leftMasterTalonID);
         rightFollow.set(ControlMode.Follower, DriveTrainConstants.rightMasterTalonID);
