@@ -28,18 +28,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    //By using the Command Scheduler to register our subsystem,
-    //we will not have to manually call the Periodic loop each run.
-    //Instead, WPILib will handle it for us.
-    CommandScheduler.getInstance().registerSubsystem(DriveTrain.getInstance());
     lift = new Lift();
-
   }
 
   @Override
   public void teleopPeriodic() {
-
+    driveTrain.periodic(leftDriverJoystick, rightDriverJoystick);
     lift.periodic(mechJoystick);
-
   }
 }
