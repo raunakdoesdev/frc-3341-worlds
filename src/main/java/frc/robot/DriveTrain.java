@@ -52,16 +52,16 @@ public class DriveTrain {
         differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
     }
 
-    public void teleopPeriodic(Joystick leftDriver, Joystick rightDriver) {
+    public void teleopPeriodic(Joystick leftDriverJoystick, Joystick rightDriverJoystick) {
         odometry.teleopPeriodic(); // update odometry information
 
-        if (leftDriver.getRawButtonReleased(DriveTrainConstants.invertDriveButton))
+        if (leftDriverJoystick.getRawButtonReleased(DriveTrainConstants.invertDriveButton))
             invertedDrive = !invertedDrive;
-            
+
         if (!invertedDrive)
-            differentialDrive.tankDrive(leftDriver.getY(), rightDriver.getY());
+            differentialDrive.tankDrive(leftDriverJoystick.getY(), rightDriverJoystick.getY());
         else
-            differentialDrive.tankDrive(-rightDriver.getY(), -leftDriver.getY());
+            differentialDrive.tankDrive(-rightDriverJoystick.getY(), -leftDriverJoystick.getY());
     }
 
     /**
