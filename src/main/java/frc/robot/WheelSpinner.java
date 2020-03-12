@@ -30,7 +30,7 @@ class WheelSpinnerConstants {
         colorMap = new HashMap<>();
         colorMap.put('C', blueTarget);
         colorMap.put('G', greenTarget);
-        colorMap.put('R', yellowTarget);
+        colorMap.put('R', redTarget);
         colorMap.put('Y', yellowTarget);
     }
 
